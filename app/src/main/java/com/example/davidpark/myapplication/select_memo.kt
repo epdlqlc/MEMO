@@ -27,6 +27,7 @@ import android.support.v7.app.AlertDialog
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
+import com.google.firebase.iid.FirebaseInstanceId
 import com.kakao.kakaotalk.callback.TalkResponseCallback
 import com.kakao.kakaotalk.response.KakaoTalkProfile
 import com.kakao.kakaotalk.v2.KakaoTalkService
@@ -52,17 +53,28 @@ class select_memo : AppCompatActivity() , CellAdapter.CellListOnClickListener, C
     var Name:String?=null
     var imageUrl:String?  = null
 
+
     internal var dlDrawer: DrawerLayout? = null
     internal var dtToggle: ActionBarDrawerToggle? = null
 
+    var refreshedToken: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        var pref: SharedPreferences = getSharedPreferences("MEMO", Activity.MODE_PRIVATE)
+        id = pref.getString("ID",null)
+
+        // 푸시알림 토큰 가져오기
+        refreshedToken = FirebaseInstanceId.getInstance().getToken()!!
+        Log.v("FCM Token: ", refreshedToken)
+
+        UpdateToken().execute()
+
         imageUrl = "https://k.kakaocdn.net/dn/brbCHP/btqnvlCzQqL/mOb0iHmfIMKJNmNkpWmtlk/profile_640x640s.jpg"
         requestProfile()
         setContentView(R.layout.select_memo)
 
-        var pref: SharedPreferences = getSharedPreferences("MEMO", Activity.MODE_PRIVATE)
-        id = pref.getString("ID",null)
 
         var layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mRecyclerView = findViewById<RecyclerView>(R.id.recycler_view)
@@ -115,6 +127,33 @@ class select_memo : AppCompatActivity() , CellAdapter.CellListOnClickListener, C
         dtToggle = ActionBarDrawerToggle(this, dlDrawer, R.string.app_name, R.string.app_name)
         dlDrawer!!.setDrawerListener(dtToggle)
 
+    }
+
+
+    // DB에 토큰 등록
+    inner class UpdateToken: AsyncTask<Void, String, String>(){
+        override fun onPreExecute() {
+            //swipe_layout.isRefreshing = true
+        }
+        override fun doInBackground(vararg p0: Void?): String? {
+            var map = HashMap<String, String>()
+            map["id"] = id!!
+            map["token"] = refreshedToken!!
+            var url = NetworkUtils.buildUrl("token_update.php", map)
+
+            var ret = NetworkUtils.getResponseFromHttpUrl(url)
+
+            return ret.toString()
+        }
+
+        override fun onPostExecute(result: String) {
+            if(result == "1"){
+            }
+            else {
+                Log.v("error", "토큰 등록 실패 || 이미 등록됨")
+            }
+            //swipe_layout.isRefreshing = false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

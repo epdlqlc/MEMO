@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.davidpark.myapplication.utilities.NetworkUtils
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.login_memo.*
 import kotlinx.android.synthetic.main.register.*
 import java.text.SimpleDateFormat
@@ -63,6 +64,29 @@ class ACT2 : AppCompatActivity() {
             else map["date_c"] = date_c!!
 
             var url = NetworkUtils.buildUrl("insert.php", map)
+
+            var String = NetworkUtils.getResponseFromHttpUrl(url)
+
+            return String
+        }
+
+        override fun onPostExecute(result: String?) {
+            if(result == "1") {
+                Toast.makeText(applicationContext, "저장되었습니다.", Toast.LENGTH_LONG).show()
+                PushNotification().execute()
+            }
+        }
+    }
+
+    inner class PushNotification: AsyncTask<Void, String, String?>(){
+        override fun onPreExecute() {
+        }
+        override fun doInBackground(vararg p0: Void?): String? {
+            var map = HashMap<String, String>()
+            map["title"] = "'"+titl+"'의 메모가 수정되었습니다."
+            map["body"] = "수정 시간 : "+ date!!
+
+            var url = NetworkUtils.buildUrl("push_notification.php", map)
 
             var String = NetworkUtils.getResponseFromHttpUrl(url)
 

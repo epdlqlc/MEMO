@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "628897085861",
+    "firebase_url": "https://push-test-hw.firebaseio.com",
+    "project_id": "push-test-hw",
+    "storage_bucket": "push-test-hw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628897085861:android:bb499a11efa9b26e",
+        "android_client_info": {
+          "package_name": "com.example.davidpark.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628897085861-rnr03tvjv9s4boo6a7gp2qji24qve31l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuJzMYwBlSBwqY0E1XPnM5lx99CByyGl8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628897085861:android:ee879a53cf385049",
+        "android_client_info": {
+          "package_name": "e.android.hanvit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628897085861-rnr03tvjv9s4boo6a7gp2qji24qve31l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuJzMYwBlSBwqY0E1XPnM5lx99CByyGl8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
